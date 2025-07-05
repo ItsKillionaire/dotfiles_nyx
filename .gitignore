@@ -1,0 +1,21 @@
+.bash_history
+.zsh_history
+.viminfo
+.lesshst
+.python_history
+.npm/
+.cache/
+.local/share/Trash/
+.mozilla/firefox/*.default-esr/cache2/
+.pylint.d/
+.ssh/ # IMPORTANT: Do NOT commit SSH keys!
+.gitconfig.local # If you use a local gitconfig for sensitive info
+*.swp # Vim/Neovim swap files
+*.bak # Backup files
+*~    # Emacs backup files
+# For IDEs like VS Code
+.vscode/
+# For other language specific ignores (e.g. node_modules for JS projects)
+node_modules/
+target/ # Rust projects
+build/ # C/C++ projects

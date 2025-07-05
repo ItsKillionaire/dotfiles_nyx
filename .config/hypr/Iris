@@ -1,0 +1,210 @@
+source = $HOME/.cache/wal/colors-hyprland.conf
+exec-once = hyprpaper &
+
+#---------------------------------------------------------------------------------------
+#   Monitors
+#---------------------------------------------------------------------------------------
+
+# Monitors resolution, scale and position settings
+monitor=eDP-1,preferred,auto,1
+monitor=,preferred,auto,1
+
+#---------------------------------------------------------------------------------------
+#   My Programs
+#---------------------------------------------------------------------------------------
+
+# Variable for the set app for the hyprland files
+$terminal = kitty
+$fileManager = thunar
+$menu = rofi -show drun
+$browser = zen-browser
+
+#---------------------------------------------------------------------------------------
+#   Autostart Programs & Script
+#---------------------------------------------------------------------------------------
+
+# Programs that runs on start
+exec-once = waybar &
+exec-once = swaync &
+exec-once = hypridle &
+exec-once = dex -a &
+exec-once = solaar &
+
+ #command for the dolphin recorgine the default app settings
+ exec-once = XDG_MENU_PREFIX=arch- kbuildsycoca5
+
+#command for clipboard
+# exec-once = greenclip daemon
+exec-once = wl-paste --watch cliphist store
+
+# Touchpad gestures
+
+exec-once = libinput-gestures
+
+#---------------------------------------------------------------------------------------
+#   Environment Variable
+#---------------------------------------------------------------------------------------
+
+#env for the set the sursor in X11 and wayland applications
+env = QT_QPA_PLATFORM,wayland
+env = QT_QPA_PLATFORMTHEME,qt5ct
+env = QT_STYLE_OVERRIDE,kvantum
+
+# Cursor theme and size
+env = HYPRCURSOR_THEME,Bibata-Modern-Ice
+env = HYPRCURSOR_SIZE,24
+env = XCURSOR_THEME,Bibata-Modern-Ice
+env = XCURSOR_SIZE,24
+
+# Font settings
+env = GDK_FONT,JetBrains Mono
+env = QT_FONT,JetBrains Mono
+env = GDK_DPI_SCALE,1
+
+# env = TERMINAL,kitty
+
+#---------------------------------------------------------------------------------------
+# Looks and Feels
+#---------------------------------------------------------------------------------------
+
+
+#Other settings of gaps, colors and border of widnows
+general {
+    gaps_in = 2
+    gaps_out = 6
+    border_size = 2
+
+    col.active_border = $color2
+    col.inactive_border = $background
+    # # col.active_border = 0xffffffff
+    # # col.inactive_border = 0xff444444
+    #
+    resize_on_border = false
+
+    allow_tearing = false
+    layout = dwindle
+}
+
+decoration {
+    rounding = 6
+    rounding_power = 2
+
+    active_opacity = 1.0
+    inactive_opacity = 0.95
+
+    shadow {
+        enabled = false
+        range = 4 
+        render_power = 3
+        # color = $color2
+    }
+
+    blur {
+        enabled = true
+        size = 4 
+        passes = 2
+        vibrancy = 0.1696
+    }
+}
+
+# #Animations for the  Windows
+animations {
+    enabled = yes, please :)
+
+    #Animations styles
+    bezier = easeOutQuint,0.23,1,0.32,1
+    bezier = easeInOutCubic,0.65,0.05,0.36,1
+    bezier = linear,0,0,1,1
+    bezier = almostLinear,0.5,0.5,0.75,1.0
+    bezier = quick,0.15,0,0.1,1
+    bezier = smooth,0.3,0.7,0.4,1
+    bezier = ultraSmooth,0.25,1,0.5,1
+    bezier = bouncy,0.34,1.56,0.64,1
+
+    #Window animations 
+    #Window animations 
+    animation = global, 1, 10, default
+    animation = border, 1, 5.39, easeOutQuint
+    animation = windows, 1, 4.79, bouncy, popin 87%
+    animation = windowsIn, 1, 6.1, bouncy, popin 87%
+    animation = windowsOut, 1, 1.49, bouncy, popin 87%
+    animation = fadeIn, 1, 1.73, almostLinear
+    animation = fadeOut, 1, 1.46, almostLinear
+    animation = fade, 1, 3.03, quick
+    animation = layers, 1, 3.81, easeOutQuint
+    animation = layersIn, 1, 4, easeOutQuint, fade
+    animation = layersOut, 1, 1.5, linear, fade
+    animation = fadeLayersIn, 1, 1.79, almostLinear
+    animation = fadeLayersOut, 1, 1.39, almostLinear
+    animation = workspaces, 1, 1.94, easeInOutCubic, fade
+    animation = workspacesIn, 1, 6.94, ultraSmooth
+    animation = workspacesOut, 1, 6.94, ultraSmooth
+} 
+
+dwindle {
+    pseudotile = true # Master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+    preserve_split = true # You probably want this
+}
+
+master {
+    new_status = master
+}
+
+misc {
+    force_default_wallpaper = 0  # Set to 0 or 1 to disable the anime mascot wallpapers
+    disable_hyprland_logo = true # If true disables the random hyprland logo / anime girl background. :(
+}
+
+#---------------------------------------------------------------------------------------
+#   Inuts Settings
+#---------------------------------------------------------------------------------------
+                               
+input {
+    kb_layout = latam
+    kb_variant =
+    kb_model =
+    kb_options =
+    kb_rules =
+
+    follow_mouse = 1
+
+    sensitivity = 0.35 # -1.0 - 1.0, 0 means no modification.
+
+    touchpad {
+        natural_scroll = true
+    }
+}
+
+# --- SETTINGS FOR MOUSE ONLY ---
+device {
+    name = logitech-mx-master-3s 
+    sensitivity = 0        
+    accel_profile = flat  
+}
+
+gestures {
+    workspace_swipe = true
+}
+
+device {
+    name = epic-mouse-v1
+    sensitivity = -0.5
+}
+
+#---------------------------------------------------------------------------------------
+#   Keybinds
+#---------------------------------------------------------------------------------------
+
+#Create a sparated file for keybinds and included it here
+source = /home/killionaire/.config/hypr/keybinds.conf
+
+#---------------------------------------------------------------------------------------
+#   Windows & Workspaces
+#---------------------------------------------------------------------------------------
+
+# Created a sparated file for the windows rules and imported it here
+source = $HOME/.config/hypr/Windowrules.conf
+
+#---------------------------------------------------------------------------------------
+#  Ends Of the file
+#---------------------------------------------------------------------------------------

@@ -1,0 +1,34 @@
+#!/bin/sh
+
+echo "--- Starting sequences script (for hyprpaper reload) ---" # New echo
+
+# Path to the file where pywal stores the current wallpaper path
+PYWAL_WALLPAPER_FILE="$HOME/.cache/wal/wal"
+# Path to the symlink that hyprpaper will use
+HYPRPAPER_SYMLINK="$HOME/.config/hypr/current_wallpaper_pywal.png"
+
+if [ -f "$PYWAL_WALLPAPER_FILE" ]; then
+    NEW_WALLPAPER_PATH=$(cat "$PYWAL_WALLPAPER_FILE")
+    echo "Read wallpaper path: $NEW_WALLPAPER_PATH"
+
+    if [ -n "$NEW_WALLPAPER_PATH" ] && [ -f "$NEW_WALLPAPER_PATH" ]; then
+        ln -sf "$NEW_WALLPAPER_PATH" "$HYPRPAPER_SYMLINK"
+        echo "Symlink $HYPRPAPER_SYMLINK updated to $NEW_WALLPAPER_PATH"
+
+        # Force hyprpaper to reload by restarting it
+        echo "Attempting to restart hyprpaper..."
+        killall hyprpaper
+        sleep 0.5 # Give it a moment for the process to fully terminate
+        hyprpaper & # Start hyprpaper in the background; it will read its config
+        echo "hyprpaper restarted."
+    else
+        echo "Error: NEW_WALLPAPER_PATH ('$NEW_WALLPAPER_PATH') from $PYWAL_WALLPAPER_FILE is empty or the image file does not exist."
+    fi
+else
+    echo "Error: $PYWAL_WALLPAPER_FILE not found."
+fi
+
+echo "--- Finished sequences script ---"
+
+# Optional: Reload Waybar (if you have this line, keep it if you want it)
+killall -SIGUSR2 waybar &

@@ -1,0 +1,27 @@
+[pyprland]
+plugins = [
+  "scratchpads"
+]
+
+[scratchpads.term]
+animation = "fromTop"
+command = "kitty --class kitty-dropterm"
+class = "kitty-dropterm"
+position = "17% 6%"
+size = "65% 60%"
+offset = "200%"
+
+[scratchpads.music]
+animation = "fromBottom"
+command = "kitty --class kitty-pulsemixer -e pulsemixer"
+class = "kitty-pulsemixer"
+size = "50% 20%"
+offset = "200%"
+
+[scratchpads.taskbar]
+animation = "fromLeft"
+command = "kitty --class kitty-taskbar -e htop"
+class = "kitty-taskbar"
+size = "30% 80%"
+offset = "200%"
+

@@ -1,4 +1,4 @@
-This repository specifically tracks the following configuration directories, all located within ~/.config/:
+This repository specifically tracks the following configuration directories.
 
     🖼️ Hyprland: Configuration for my Wayland compositor, including keybindings, window rules, and visual settings.
 

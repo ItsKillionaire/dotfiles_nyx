@@ -1,5 +1,9 @@
+if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
+  exec Hyprland
+fi
+
 # =============================================================================
-# 1. Environment Variables & PATH
+#  Environment Variables & PATH
 # =============================================================================
 # Set your preferred default editor
 export EDITOR="/usr/bin/nvim"
@@ -13,7 +17,7 @@ export PATH="$HOME/scripts:$PATH"
 export PATH="$PATH:$HOME/development/flutter/bin"
 
 # =============================================================================
-# 2. Oh My Zsh Configuration
+#  Oh My Zsh Configuration
 # =============================================================================
 # Path to your Oh My Zsh installation
 export ZSH="$HOME/.oh-my-zsh"
@@ -28,7 +32,7 @@ plugins=(git)
 source "$ZSH/oh-my-zsh.sh"
 
 # =============================================================================
-# 3. Appearance (Pywal & Starship)
+#  Appearance (Pywal & Starship)
 # =============================================================================
 # Load colors from pywal at the start of the session
 [ -f "$HOME/.cache/wal/sequences" ] && cat "$HOME/.cache/wal/sequences"
@@ -46,7 +50,7 @@ waltheme() {
 eval "$(starship init zsh)"
 
 # =============================================================================
-# 4. Tool Configuration (Bun & FZF)
+#  Tool Configuration (Bun & FZF)
 # =============================================================================
 # Bun shell completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
@@ -82,7 +86,7 @@ vf() {
 }
 
 # =============================================================================
-# 5. Custom Aliases & Functions
+#  Custom Aliases & Functions
 # =============================================================================
 # --- Aliases ---
 # Quickly attach or create a tmux session.

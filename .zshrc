@@ -1,70 +1,39 @@
 # =============================================================================
-#  1. Environment & PATH
-#  This should come first so the shell can find all commands.
+# 1. Environment Variables & PATH
 # =============================================================================
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.bun/bin:$PATH" #bun path
-export ZSH="$HOME/.oh-my-zsh"
-export TERMINAL=kitty
+# Set your preferred default editor
 export EDITOR="/usr/bin/nvim"
 export VISUAL="/usr/bin/nvim"
+export TERMINAL=kitty
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-#  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-# fi
+# Add custom directories to your executable path
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.bun/bin:$PATH"
+export PATH="$HOME/scripts:$PATH"
+export PATH="$PATH:$HOME/development/flutter/bin"
 
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+# =============================================================================
+# 2. Oh My Zsh Configuration
+# =============================================================================
+# Path to your Oh My Zsh installation
+export ZSH="$HOME/.oh-my-zsh"
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time Oh My Zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# ZSH_THEME="powerlevel10k/powerlevel10k"
+# Set to blank to disable OMZ themes and use Starship instead
 ZSH_THEME=""
-#Plugins
+
+# List of Oh My Zsh plugins to use
 plugins=(git)
 
-source $ZSH/oh-my-zsh.sh
+# This loads the Oh My Zsh framework
+source "$ZSH/oh-my-zsh.sh"
 
-# User configuration
+# =============================================================================
+# 3. Appearance (Pywal & Starship)
+# =============================================================================
+# Load colors from pywal at the start of the session
+[ -f "$HOME/.cache/wal/sequences" ] && cat "$HOME/.cache/wal/sequences"
 
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='nvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch $(uname -m)"
-
-# Set personal aliases, overriding those provided by Oh My Zsh libs,
-# plugins, and themes. Aliases can be placed here, though Oh My Zsh
-# users are encouraged to define aliases within a top-level file in
-# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
-# - $ZSH_CUSTOM/aliases.zsh
-# - $ZSH_CUSTOM/macos.zsh
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-#[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-cat ~/.cache/wal/sequences
-
-# Function to set pywal theme and run sequences script
+# [Function] Sets system-wide color scheme from an image using pywal.
 waltheme() {
     if [ -z "$1" ]; then
         echo "Usage: waltheme /path/to/image.jpg"
@@ -73,89 +42,69 @@ waltheme() {
     wal -i "$1" -o "$HOME/.config/wal/sequences"
 }
 
-# bun completions
-[ -s "/home/killionaire/.bun/_bun" ] && source "/home/killionaire/.bun/_bun"
-
+# Initialize Starship Prompt - MUST BE LAST for prompt configuration
 eval "$(starship init zsh)"
 
-# ~/.zshrc
-alias t='tmux attach || tmux new-session' # Attach to existing session or create a new one
-# ~/.dotfiles bare git repo
-alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-# course directory alias
-alias cs50="cd /home/killionaire/Documents/Notes/cs50webprogramming"
+# =============================================================================
+# 4. Tool Configuration (Bun & FZF)
+# =============================================================================
+# Bun shell completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
-# --- fzf for directory navigation (without zoxide) ---
+# --- FZF Configuration ---
+# FZF keybindings and fuzzy completion
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# Common fzf options for directory selection
-_fzf_dir_options=(
-  --height 40% --layout=reverse --border
-  --preview 'ls -F {}' # Shows contents of selected directory
-  --bind "ctrl-o:execute(xdg-open {} > /dev/null 2>&1)" # Open selected dir in file manager
-  --bind "ctrl-e:execute(nvim {} > /dev/null 2>&1)" # Open selected dir in Neovim
+# FZF visual settings
+export FZF_DEFAULT_OPTS='
+--height 50% --reverse --border=rounded
+--prompt="  " --pointer="󰄶 "
+--color="fg:#d8dee9,hl:#81a1c1,fg+:#d8dee9,hl+:#81a1c1"
+--color="bg+:#3b4252,preview-bg:#3b4252,border:#4c566a"
+--preview="bat --color=always --style=numbers --line-range=:500 {}"
+--bind="ctrl-d:page-down,ctrl-u:page-up"
+'
 
-  # --- Vim-like Keybindings (using Ctrl combinations to avoid search conflicts) ---
-  --bind "ctrl-j:down"    # Ctrl+J for down
-  --bind "ctrl-k:up"      # Ctrl+K for up
-  --bind "ctrl-d:half-page-down" # Ctrl+D for half page down
-  --bind "ctrl-u:half-page-up"   # Ctrl+U for half page up
-  # Removed: plain 'j' and 'k' to avoid conflict with typing search query
-  # Removed: 'gg' and 'G' as they are unsupported multi-character binds in older fzf
-  # --- End Vim-like Keybindings ---
-)
-
-# Function to jump to a directory using fzf
-function zf() {
-  local selected_dir
-
-  selected_dir=$( (
-    # 1. Directories from your shell's pushd/popd stack (if active)
-    dirs -l -p 2>/dev/null
-
-    # 2. Unique directories from your shell history (grep for 'cd ')
-    # Using a more robust way to handle path expansion and filtering
-    # For Zsh:
-    if [[ -f "$HOME/.zsh_history" ]]; then
-      # Zsh history format: `: timestamp:seconds;cd /path/to/dir`
-      grep -E '^: [0-9]+:[0-9]+;cd ' "$HOME/.zsh_history" | \
-      sed -E 's/^: [0-9]+:[0-9]+;cd //g' | \
-      while IFS= read -r line; do
-        # Expand ~ to $HOME using shell parameter expansion
-        echo "${line/#~/$HOME}"
-      done
-    fi
-    # If you are using Bash, uncomment the following block and comment out the Zsh block above:
-    # if [[ -f "$HOME/.bash_history" ]]; then
-    #   grep -E '^cd ' "$HOME/.bash_history" | \
-    #   sed -E 's/^cd //g' | \
-    #   while IFS= read -r line; do
-    #     echo "${line/#~/$HOME}"
-    #   done
-    # fi
-
-    # 3. Explicitly include your dotfiles bare repo
-    echo "$HOME/.dotfiles"
-
-    # 4. Recursively find directories in ~/.config (including hidden ones)
-    # -maxdepth 3: Adjust this number to control how deep it searches
-    find "$HOME/.config" -maxdepth 3 -type d -print 2>/dev/null
-
-    # 5. Recursively find directories in common notes/project roots
-    # Adjust these paths to your actual common project/notes locations
-    find "$HOME/Documents/Notes" -maxdepth 3 -type d -print 2>/dev/null
-    find "$HOME/Projects" -maxdepth 2 -type d -print 2>/dev/null
-    # Add other common paths, e.g.:
-    # find "$HOME/Code" -maxdepth 2 -type d -print 2>/dev/null
-
-    # 6. Add current directory and home directory
-    echo "$PWD"
-    echo "$HOME"
-  ) | sort -u | fzf "${_fzf_dir_options[@]}" --query "$1") # sort -u here
-
-  # If a directory was selected, change to it
-  if [[ -n "$selected_dir" ]]; then
-    cd "$selected_dir"
-  fi
+# [Function] Fuzzy find a directory and jump to it.
+zf() {
+    local selected_dir
+    selected_dir=$(fd --type d --hidden --exclude .git --exclude node_modules . "$HOME" | fzf)
+    [ -n "$selected_dir" ] && cd "$selected_dir"
 }
 
-# --- End fzf for directory navigation ---
+# [Function] Fuzzy find a file (or files) and open it in Neovim.
+vf() {
+    local files file
+    files=$(fd --type f --hidden --exclude .git --exclude node_modules . "$HOME" | fzf)
+    for file in $(echo "$files"); do
+        [ -n "$file" ] && nvim "$file"
+    done
+}
+
+# =============================================================================
+# 5. Custom Aliases & Functions
+# =============================================================================
+# --- Aliases ---
+# Quickly attach or create a tmux session.
+alias t='tmux attach || tmux new-session'
+# Manage dotfiles using a bare git repository.
+alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+# Shortcut to my CS50 course notes directory.
+alias cs50="cd /home/killionaire/Documents/Notes/cs50webprogramming"
+# Set wallpaper using a custom script.
+alias setwal='/home/killionaire/scripts/setwal.sh'
+
+# --- Termux Connection Functions ---
+# Mounts the Termux filesystem onto the local ~/Termux directory.
+mount-phone() {
+    echo ">>> Mounting Termux phone files on ~/Termux..."
+    echo ">>> Make sure sshd is running on your phone!"
+    sshfs -f -p 8022 -o follow_symlinks u0_a619@192.168.68.56:/data/data/com.termux/files/home ~/Termux
+}
+
+# Safely unmounts the Termux filesystem.
+unmount-phone() {
+    echo ">>> Unmounting ~/Termux..."
+    fusermount -u ~/Termux
+    echo ">>> Done."
+}

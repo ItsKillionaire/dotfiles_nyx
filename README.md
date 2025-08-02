@@ -13,3 +13,5 @@ This repository specifically tracks the following configuration directories.
     🔔 SwayNC
 
     👨🏼‍💻 Fastfetch
+
+    🐧 Tmux: Added mocha theme, tpm, tmux sensible, tmux-yank, resurrect and continuum.

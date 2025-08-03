@@ -8,7 +8,7 @@ fi
 # Set your preferred default editor
 export EDITOR="/usr/bin/nvim"
 export VISUAL="/usr/bin/nvim"
-export TERMINAL=kitty
+export TERMINAL=ghostty
 
 # Add custom directories to your executable path
 export PATH="$HOME/.local/bin:$PATH"

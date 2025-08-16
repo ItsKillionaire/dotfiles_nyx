@@ -5,12 +5,12 @@ fi
 # =============================================================================
 #  Environment Variables & PATH
 # =============================================================================
-# Set your preferred default editor
+# Preferred default editor
 export EDITOR="/usr/bin/nvim"
 export VISUAL="/usr/bin/nvim"
 export TERMINAL=ghostty
 
-# Add custom directories to your executable path
+# Custom directories to executable path
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.bun/bin:$PATH"
 export PATH="$HOME/scripts:$PATH"
@@ -97,6 +97,8 @@ alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias cs50="cd /home/killionaire/Documents/Notes/cs50webprogramming"
 # Set wallpaper using a custom script.
 alias setwal='/home/killionaire/scripts/setwal.sh'
+# Phone remote using scrcpy
+alias phone='nohup scrcpy -b 16M --max-fps=60 &'
 
 # --- Termux Connection Functions ---
 # Mounts the Termux filesystem onto the local ~/Termux directory.

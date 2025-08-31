@@ -93,7 +93,9 @@ vf() {
 alias t='tmux attach || tmux new-session'
 # Manage dotfiles using a bare git repository.
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-# Shortcut to my CS50 course notes directory.
+# Manage private dotfiles to share with my other devices
+alias cfg='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+# # Shortcut to my CS50 course notes directory.
 alias cs50="cd /home/killionaire/Documents/Notes/cs50webprogramming"
 # Set wallpaper using a custom script.
 alias setwal='/home/killionaire/scripts/setwal.sh'
@@ -114,3 +116,7 @@ unmount-phone() {
     fusermount -u ~/Termux
     echo ">>> Done."
 }
+
+# Source device-specific settings if they exist
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+export OLLAMA_MODELS=/home/killionaire/.ollama
